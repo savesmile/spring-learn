@@ -25,8 +25,7 @@ public class AQSTests {
                 try {
                     test1(threadnum);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+
                 } finally {
                     countDownLatch.countDown();// 表示一个请求已经被完成
                 }
@@ -58,10 +57,8 @@ public class AQSTests {
                 try {
                     //通知 CyclicBarrier 该线程已就绪
                     cyclicBarrier.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (BrokenBarrierException e) {
-                    e.printStackTrace();
+                } catch (InterruptedException | BrokenBarrierException e) {
+
                 }
                 System.out.println("threadnum: 【 " + threadIndex + " 】 is finish");
             });

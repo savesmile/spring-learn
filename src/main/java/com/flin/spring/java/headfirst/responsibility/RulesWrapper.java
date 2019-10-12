@@ -18,7 +18,7 @@ public class RulesWrapper {
 
     private static List<DefaultRule> rules = new ArrayList<>();
 
-    {
+    static {
         rules.add(new Rule1());
         rules.add(new Rule2());
         rules.add(new Rule3());
