@@ -97,7 +97,7 @@ public class A4_String {
 
     @Test
     public void testEqual() {
-        //在常量池中 加入 "Hello",并在heap中创建一个String对象，其引用指向常量池"Hello"
+        //在常量池中 加入 "Hello",并在heap中创建一个String对象，其引用指向常量池"Hello"地址
         String s1 = "Hello";
         String s2 = "Hello";
         //编译期优化，由于"Hel"\"lo"都是已知数值，使用 `+` 连接。在编译时，直接会被优化成 "Hello"
