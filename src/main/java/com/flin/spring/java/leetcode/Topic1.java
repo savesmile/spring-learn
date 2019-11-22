@@ -1,5 +1,10 @@
 package com.flin.spring.java.leetcode;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author F_lin
  * @since 2019/4/9
@@ -7,8 +12,8 @@ package com.flin.spring.java.leetcode;
 public class Topic1 {
 
     public static void main(String[] args) {
-
-
+        int length = lengthOfLongestSubstring2("pwwkew");
+        System.out.println(length);
     }
 
     public static int numJewelsInStones(String J, String S) {
@@ -21,7 +26,6 @@ public class Topic1 {
         }
         return count;
     }
-
 
 
     /**
@@ -84,20 +88,20 @@ public class Topic1 {
 
     private static void deleteNode(ListNode node) {
         //思想  直接将本节点的内容替换成下一个节点 也就不需要head or pre
-        node.setVal(node.getNext().getVal());
+        // node.setVal(node.getNext().getVal());
         node.setNext(node.getNext().getNext());
 
     }
 
     public static class ListNode {
-        private Object val;
+        private int val;
         private ListNode next;
 
         public Object getVal() {
             return val;
         }
 
-        public void setVal(Object val) {
+        public void setVal(int val) {
             this.val = val;
         }
 
@@ -109,8 +113,91 @@ public class Topic1 {
             this.next = next;
         }
 
-        public ListNode(Object val) {
+        public ListNode(int val) {
             this.val = val;
         }
     }
+
+
+    public static int[] twoSum(int[] nums, int target) {
+        //key->nums[i] 的补集，v->nums[i] 的index i
+        HashMap<Integer, Integer> temp = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            Integer difference = nums[i];
+            if (temp.containsKey(difference)) {
+                return new int[]{temp.get(difference), i};
+            }
+            temp.put(target - nums[i], i);
+        }
+        throw new IllegalArgumentException("No expected value!");
+    }
+
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode pre = new ListNode(0);
+        ListNode current = pre;
+        int carry = 0;
+
+        while (l1 != null || l2 != null) {
+            int x = l1 == null ? 0 : l1.val;
+            int y = l2 == null ? 0 : l2.val;
+            int sum = x + y;
+
+
+            int val = (sum + carry) % 10;
+            current.next = new ListNode(val);
+            current = current.next;
+
+            //val可能为10
+            carry = (sum + carry) / 10;
+
+            l1 = l1 == null ? null : l1.next;
+            l2 = l2 == null ? null : l2.next;
+        }
+        //兼容 4->null  + 6->null ....
+        if (carry == 1) {
+            current.next = new ListNode(1);
+        }
+        return pre.next;
+    }
+
+
+    /**
+     * abcdjgkhmhkdkkf
+     * i j
+     * <p>
+     * 最长不重复子串
+     */
+    public static int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        Set<Character> set = new HashSet<>();
+        int diff = 0, i = 0, j = 0;
+        while (i < n && j < n) {
+            if (!set.contains(s.charAt(j))) {
+                set.add(s.charAt(j++));
+                diff = Math.max(diff, j - i);
+            } else {
+                set.remove(s.charAt(i++));
+            }
+        }
+        return diff;
+    }
+
+    public static int lengthOfLongestSubstring2(String s) {
+        int n = s.length();
+        int diff = 0;
+        Map<Character, Integer> temp = new HashMap<>();
+        for (int i = 0, j = 0; j < n; j++) {
+            if (temp.containsKey(s.charAt(j))) {
+                i = Math.max(temp.get(s.charAt(j)), i);
+            }
+
+            diff = Math.max(j - i + 1, diff);
+
+            temp.put(s.charAt(j), j + 1);
+        }
+
+        return diff;
+
+    }
+
 }
