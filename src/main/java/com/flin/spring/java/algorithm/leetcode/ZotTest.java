@@ -1,4 +1,4 @@
-package com.flin.spring.java.leetcode;
+package com.flin.spring.java.algorithm.leetcode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
